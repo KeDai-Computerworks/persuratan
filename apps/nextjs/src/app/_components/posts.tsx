@@ -64,14 +64,29 @@ export function CreatePostForm() {
         Create
       </button>
       {error?.data?.code === "UNAUTHORIZED" && (
-        <span className="mt-2 text-red-500">You must be logged in to post</span>
+        <span className="mt-2 text-red-500">
+          You must be logged in to post {error?.data?.code}
+        </span>
       )}
     </form>
   );
 }
 
 export function PostList() {
-  const [posts] = api.post.all.useSuspenseQuery();
+  const { data: posts, isLoading, isError } = api.post.all.useQuery();
+
+  if (isLoading) {
+    return (
+      <div className="flex w-full flex-col gap-4">
+        <PostCardSkeleton />
+        <PostCardSkeleton />
+        <PostCardSkeleton />
+      </div>
+    );
+  }
+  if (isError) {
+    return <div>Error...</div>;
+  }
 
   if (posts.length === 0) {
     return (
