@@ -6,7 +6,7 @@
   },
   "packageManager": "pnpm@8.7.1",
   "scripts": {
-    "postinstall": "prisma generate",
+    "postinstall": "pnpm -F db generate",
     "build": "turbo build",
     "clean": "git clean -xdf node_modules",
     "clean:workspaces": "turbo clean",
