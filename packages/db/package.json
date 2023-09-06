@@ -10,6 +10,7 @@
     "lint": "eslint .",
     "format": "prettier --check \"**/*.{mjs,ts,md,json}\"",
     "push": "pnpm prisma db push",
+    "generate": "pnpm prisma generate",
     "migrate": "pnpm prisma migrate dev",
     "studio": "pnpm prisma studio",
     "typecheck": "tsc --noEmit"
