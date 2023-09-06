@@ -1,9 +1,9 @@
-import { auth } from "@acme/auth";
+import { getServerAuthSession } from "@acme/auth";
 
 import { SignIn, SignOut } from "~/components/auth";
 
 export async function AuthShowcase() {
-  const session = await auth();
+  const session = await getServerAuthSession();
 
   if (!session) {
     return (

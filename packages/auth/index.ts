@@ -1,7 +1,7 @@
-import type { DefaultSession } from "@auth/core/types";
 import { PrismaAdapter } from "@auth/prisma-adapter";
-import NextAuth from "next-auth";
-import Google from "next-auth/providers/google";
+import type { DefaultSession, NextAuthOptions } from "next-auth";
+import NextAuth, { getServerSession } from "next-auth";
+import GoogleProvider from "next-auth/providers/google";
 
 import { prisma } from "@acme/db";
 
@@ -21,14 +21,10 @@ declare module "next-auth" {
   }
 }
 
-export const {
-  handlers: { GET, POST },
-  auth,
-  CSRF_experimental,
-} = NextAuth({
+export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(prisma),
   providers: [
-    Google({
+    GoogleProvider({
       clientId: env.GOOGLE_CLIENT_ID,
       clientSecret: env.GOOGLE_CLIENT_SECRET,
     }),
@@ -46,20 +42,29 @@ export const {
       return true;
     },
 
-    // @TODO - if you wanna have auth on the edge
-    jwt: ({ token, profile }) => {
-      if (profile?.id) {
-        token.id = profile.id;
-        token.image = profile.picture;
-      }
-      return token;
-    },
+    // // @TODO - if you wanna have auth on the edge
+    // jwt: ({ token, profile }) => {
+    //   if (profile?.id) {
+    //     token.id = profile.id;
+    //     token.image = profile.picture;
+    //   }
+    //   return token;
+    // },
 
-    // @TODO
-    authorized({ auth }) {
-      console.log({ auth });
+    // // @TODO
+    // authorized({ auth }) {
+    //   console.log({ auth });
 
-      return !!auth?.user;
-    },
+    //   return !!auth?.user;
+    // },
   },
-});
+};
+
+// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+export const handler = NextAuth(authOptions);
+
+export const getServerAuthSession = () => {
+  return getServerSession(authOptions);
+};
+
+// export const getServerSessions = () => getServerSession()
