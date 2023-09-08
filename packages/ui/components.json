@@ -10,6 +10,6 @@
   },
   "aliases": {
     "components": "@ui/components",
-    "utils": "@ui/lib/utils"
+    "utils": "@acme/tailwind-config/lib/utils"
   }
 }
