@@ -1,30 +1,27 @@
-import { getServerAuthSession } from "@acme/auth";
+"use client";
 
-import { SignIn, SignOut } from "~/components/auth";
+import { signIn, signOut, useSession } from "next-auth/react";
 
-export async function AuthShowcase() {
-  const session = await getServerAuthSession();
+import { Button } from "@acme/ui/components/ui/button";
+
+export function AuthShowcase() {
+  const { data: session } = useSession();
 
   if (!session) {
     return (
-      <SignIn
-        provider="google"
-        className="rounded-full bg-white/10 px-10 py-3 font-semibold no-underline transition hover:bg-white/20"
-      >
-        Sign in with Discord
-      </SignIn>
+      <Button variant={"destructive"} onClick={() => void signIn()}>
+        Sign in with Google
+      </Button>
     );
   }
 
   return (
     <div className="flex flex-col items-center justify-center gap-4">
-      <p className="text-center text-2xl text-white">
+      <p className="inline-flex items-center justify-center rounded-md bg-primary text-sm font-medium text-primary-foreground ring-offset-background transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50">
         {session && <span>Logged in as {session.user.name}</span>}
       </p>
 
-      <SignOut className="rounded-full bg-white/10 px-10 py-3 font-semibold no-underline transition hover:bg-white/20">
-        Sign out
-      </SignOut>
+      <Button onClick={() => void signOut()}>Sign out</Button>
     </div>
   );
 }
