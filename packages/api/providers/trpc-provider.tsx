@@ -7,8 +7,8 @@ import { ReactQueryStreamedHydration } from "@tanstack/react-query-next-experime
 import { httpBatchLink, loggerLink } from "@trpc/client";
 import superjson from "superjson";
 
-import { env } from "~/env.mjs";
-import { api } from "~/utils/api";
+import { env } from "../env.mjs";
+import { api } from "../utils/api";
 
 const getBaseUrl = () => {
   if (typeof window !== "undefined") return ""; // browser should use relative url

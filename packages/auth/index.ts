@@ -8,6 +8,7 @@ import { prisma } from "@acme/db";
 import { env } from "./env.mjs";
 
 export type { Session } from "next-auth";
+export { AuhtProvider } from "./providers/session-provider";
 
 // Update this whenever adding new providers so that the client can
 export const providers = ["google"] as const;
