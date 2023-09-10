@@ -7,6 +7,7 @@ import { ThemeToggle } from "./theme-toggle";
 
 interface SiteHeaderProps {
   items?: NavItem[];
+  href?: string;
   name: string;
 }
 
