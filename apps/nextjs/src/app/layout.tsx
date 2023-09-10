@@ -5,12 +5,10 @@ import "@acme/ui/styles/globals.css";
 
 import { headers } from "next/headers";
 
-import { TRPCReactProvider } from "@acme/api";
-import { AuhtProvider, getServerAuthSession } from "@acme/auth";
-import { cn } from "@acme/tailwind-config/lib/utils";
-import { ThemeProvider } from "@acme/ui/providers/theme-provider";
+import { getServerAuthSession } from "@acme/auth";
 
-import { siteConfig } from "~/config/site";
+import SessionProvider from "./providers/session-provider";
+import { TRPCReactProvider } from "./providers/trpc-provider";
 
 const fontSans = Inter({
   subsets: ["latin"],
@@ -18,15 +16,8 @@ const fontSans = Inter({
 });
 
 export const metadata: Metadata = {
-  title: {
-    default: siteConfig.name,
-    template: `%s - ${siteConfig.name}`,
-  },
-  description: siteConfig.description,
-  themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "white" },
-    { media: "(prefers-color-scheme: dark)", color: "black" },
-  ],
+  title: "Create T3 Turbo",
+  description: "Simple monorepo with shared backend for web & mobile apps",
   openGraph: {
     title: "Create T3 Turbo",
     description: "Simple monorepo with shared backend for web & mobile apps",
@@ -43,20 +34,13 @@ export const metadata: Metadata = {
 export default async function Layout(props: { children: React.ReactNode }) {
   const session = await getServerAuthSession();
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body
-        className={cn(
-          "bg-background min-h-screen font-sans antialiased",
-          ["font-sans", fontSans.variable].join(" "),
-        )}
-      >
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          <AuhtProvider session={session}>
-            <TRPCReactProvider headers={headers()}>
-              {props.children}
-            </TRPCReactProvider>
-          </AuhtProvider>
-        </ThemeProvider>
+    <html lang="en">
+      <body className={["font-sans", fontSans.variable].join(" ")}>
+        <SessionProvider session={session}>
+          <TRPCReactProvider headers={headers()}>
+            {props.children}
+          </TRPCReactProvider>
+        </SessionProvider>
       </body>
     </html>
   );

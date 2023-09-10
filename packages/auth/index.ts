@@ -3,12 +3,11 @@ import type { DefaultSession, NextAuthOptions } from "next-auth";
 import NextAuth, { getServerSession } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 
-import { db } from "@acme/db";
+import { prisma } from "@acme/db";
 
 import { env } from "./env.mjs";
 
 export type { Session } from "next-auth";
-export { AuhtProvider } from "./providers/session-provider";
 
 // Update this whenever adding new providers so that the client can
 export const providers = ["google"] as const;
@@ -23,7 +22,7 @@ declare module "next-auth" {
 }
 
 export const authOptions: NextAuthOptions = {
-  adapter: PrismaAdapter(db),
+  adapter: PrismaAdapter(prisma),
   providers: [
     GoogleProvider({
       clientId: env.GOOGLE_CLIENT_ID,

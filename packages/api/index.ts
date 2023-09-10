@@ -4,8 +4,6 @@ import type { AppRouter } from "./src/root";
 
 export { appRouter, type AppRouter } from "./src/root";
 export { createTRPCContext } from "./src/trpc";
-export { api } from "./utils/api";
-export { TRPCReactProvider } from "./providers/trpc-provider";
 
 /**
  * Inference helpers for input types
