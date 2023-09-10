@@ -132,3 +132,7 @@ export const shadcnPlugin = plugin(
     plugins: [animatePlugin],
   },
 );
+
+// import tailwindConfig from "tailwind.config";
+// import resolveConfig from "tailwindcss/resolveConfig";
+// const resolvedConfig = resolveConfig(tailwindConfig);
