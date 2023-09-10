@@ -15,6 +15,8 @@
     "db:generate": "pnpm -F db generate",
     "db:migrate": "pnpm -F db migrate",
     "dev": "turbo dev --parallel",
+    "dev:web": "pnpm -F nextjs dev",
+    "dev:mobile": "pnpm -F expo ios",
     "format": "turbo format --continue -- --cache --cache-location='node_modules/.cache/.prettiercache'",
     "format:fix": "turbo format --continue -- --write --cache --cache-location='node_modules/.cache/.prettiercache'",
     "lint": "turbo lint --continue -- --cache --cache-location 'node_modules/.cache/.eslintcache' && manypkg check",
