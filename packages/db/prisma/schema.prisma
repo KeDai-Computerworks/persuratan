@@ -7,12 +7,51 @@ generator client {
   provider = "prisma-client-js"
 }
 
-model Post {
+model Anggota {
   id        String   @id @default(cuid())
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  title     String
-  content   String
+  nama      String
+  nim       String
+  nra       String
+  Surat     Surat[]
+}
+
+// Surat
+model Surat {
+  id         String   @id @default(cuid())
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  nomorSurat String   @unique
+  tanggal    DateTime
+  perihal    String
+  //
+  anggota    Anggota  @relation(fields: [anggotaId], references: [id], onUpdate: Cascade, onDelete: Cascade)
+  anggotaId  String
+
+  sk                 SuratSK?
+  teguranSpPemecatan SuratTeguranSpPemecatan?
+  SuratBiasa         SuratBiasa?
+}
+
+model SuratSK {
+  nomorSurat String @unique
+  surat      Surat  @relation(fields: [nomorSurat], references: [nomorSurat])
+}
+
+model SuratTeguranSpPemecatan {
+  nomorSurat String @unique
+  lampiran   String
+  keterangan String
+  surat      Surat  @relation(fields: [nomorSurat], references: [nomorSurat])
+}
+
+model SuratBiasa {
+  nomorSurat String @unique
+  lampiran   String
+  keterangan String
+
+  surat Surat @relation(fields: [nomorSurat], references: [nomorSurat])
 }
 
 // next auth

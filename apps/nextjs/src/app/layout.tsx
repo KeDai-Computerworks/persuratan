@@ -7,8 +7,8 @@ import { headers } from "next/headers";
 
 import { getServerAuthSession } from "@acme/auth";
 
+import { TRPCReactProvider } from "~/trpc/react";
 import SessionProvider from "./providers/session-provider";
-import { TRPCReactProvider } from "./providers/trpc-provider";
 
 const fontSans = Inter({
   subsets: ["latin"],
