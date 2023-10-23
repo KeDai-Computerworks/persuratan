@@ -9,6 +9,7 @@ import { getServerAuthSession } from "@acme/auth";
 
 import { TRPCReactProvider } from "~/trpc/react";
 import SessionProvider from "./providers/session-provider";
+import { ThemeProvider } from "./providers/theme-provider";
 
 const fontSans = Inter({
   subsets: ["latin"],
@@ -34,13 +35,15 @@ export const metadata: Metadata = {
 export default async function Layout(props: { children: React.ReactNode }) {
   const session = await getServerAuthSession();
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body className={["font-sans", fontSans.variable].join(" ")}>
-        <SessionProvider session={session}>
-          <TRPCReactProvider headers={headers()}>
-            {props.children}
-          </TRPCReactProvider>
-        </SessionProvider>
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+          <SessionProvider session={session}>
+            <TRPCReactProvider headers={headers()}>
+              {props.children}
+            </TRPCReactProvider>
+          </SessionProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

@@ -14,7 +14,8 @@ model Anggota {
   nama      String
   nim       String
   nra       String
-  Surat     Surat[]
+  surat     Surat[]
+  user      User?
 }
 
 // Surat
@@ -29,9 +30,11 @@ model Surat {
   anggota    Anggota  @relation(fields: [anggotaId], references: [id], onUpdate: Cascade, onDelete: Cascade)
   anggotaId  String
 
-  sk                 SuratSK?
-  teguranSpPemecatan SuratTeguranSpPemecatan?
-  SuratBiasa         SuratBiasa?
+  suratSk        SuratSK?
+  suratTeguran   SuratTeguran?
+  suratSp        SuratSP?
+  suratBiasa     SuratBiasa?
+  suratPemecatan SuratPemecatan?
 }
 
 model SuratSK {
@@ -39,7 +42,21 @@ model SuratSK {
   surat      Surat  @relation(fields: [nomorSurat], references: [nomorSurat])
 }
 
-model SuratTeguranSpPemecatan {
+model SuratTeguran {
+  nomorSurat String @unique
+  lampiran   String
+  keterangan String
+  surat      Surat  @relation(fields: [nomorSurat], references: [nomorSurat])
+}
+
+model SuratPemecatan {
+  nomorSurat String @unique
+  lampiran   String
+  keterangan String
+  surat      Surat  @relation(fields: [nomorSurat], references: [nomorSurat])
+}
+
+model SuratSP {
   nomorSurat String @unique
   lampiran   String
   keterangan String
@@ -90,6 +107,8 @@ model User {
   image         String?
   accounts      Account[]
   sessions      Session[]
+  anggota       Anggota   @relation(fields: [anggotaId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  anggotaId     String    @unique
 }
 
 model VerificationToken {

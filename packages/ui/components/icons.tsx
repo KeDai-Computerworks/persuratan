@@ -1,14 +1,27 @@
-import { Eye, Loader2, Moon, SunMedium, Twitter } from "lucide-react";
+import {
+  CalendarIcon,
+  Eye,
+  Loader2,
+  Moon,
+  Plus,
+  // PlusCircle,
+  ScrollText,
+  SunMedium,
+  Twitter,
+} from "lucide-react";
 import type { Icon as LucideIcon, LucideProps } from "lucide-react";
 
 export type Icon = LucideIcon;
 
 export const Icons = {
+  plus: Plus,
   sun: SunMedium,
   moon: Moon,
   spinner: Loader2,
   eye: Eye,
   twitter: Twitter,
+  paper: ScrollText,
+  calendar: CalendarIcon,
   logo: (props: LucideProps) => (
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" {...props}>
       <path

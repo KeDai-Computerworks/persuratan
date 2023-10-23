@@ -9,7 +9,7 @@ export const Main = (props: MainProps) => {
   return (
     <main
       {...props}
-      className={cn("container mx-auto my-10", props.className)}
+      className={cn("container mx-auto", props.className)}
     />
   );
 };

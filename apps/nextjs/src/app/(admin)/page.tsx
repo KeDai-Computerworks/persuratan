@@ -1,15 +1,7 @@
-import { Main } from "@acme/ui/components/main";
-import { Alert } from "@acme/ui/components/ui/alert";
-import { Button } from "@acme/ui/components/ui/button";
+// import { SuratList } from "~/app/_components/surat";
+// import { api } from "~/trpc/server";
 
-// import { PostList } from "../_components/posts";
-
-export default function HomePage() {
-  return (
-    <Main>
-      <Alert variant={"destructive"}>dsds</Alert>
-      <Button variant={"destructive"}>dsdsd</Button>
-      {/* <PostList /> */}
-    </Main>
-  );
+export default function SuratListPage() {
+  //   const surats = await api.surat.all.query({ queryBy: "all" });
+  return <>Home</>;
 }

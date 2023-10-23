@@ -1,5 +1,6 @@
 import type { Metadata } from "next/types";
 
+import { Main } from "@acme/ui/components/main";
 import { SiteHeader } from "@acme/ui/components/side-header";
 
 import { siteConfig } from "~/config/site";
@@ -13,7 +14,7 @@ export default function Layout(props: { children: React.ReactNode }) {
   return (
     <>
       <SiteHeader name={siteConfig.name} items={siteConfig.mainNav} />
-      {props.children}
+      <Main>{props.children}</Main>
     </>
   );
 }

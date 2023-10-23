@@ -2,9 +2,89 @@ import { z } from "zod";
 
 import { createTRPCRouter, protectedProcedure, publicProcedure } from "../trpc";
 
+//   suratSk        SuratSK?
+// suratTeguran   SuratTeguran?
+// suratSp        SuratSP?
+// suratBiasa     SuratBiasa?
+// suratPemecatan SuratPemecatan?
+const allSchema = z.object({
+  queryBy: z.enum([
+    "all",
+    "suratBiasa",
+    "suratSk",
+    "suratTeguran",
+    "suratSp",
+    "suratPemecatan",
+  ]),
+});
+
 export const suratRouter = createTRPCRouter({
-  all: publicProcedure.query(async ({ ctx }) => {
-    const surats = await ctx.db.surat.findMany({});
+  all: publicProcedure.input(allSchema).query(async ({ ctx, input }) => {
+    const select = {
+      anggota: true,
+      nomorSurat: true,
+      perihal: true,
+      id: true,
+    };
+
+    if (input.queryBy === "suratBiasa") {
+      const surats = await ctx.db.suratBiasa.findMany({
+        select: {
+          surat: {
+            select,
+          },
+        },
+      });
+      return surats.map(({ surat, ...data }) => ({ ...surat, ...data }));
+    }
+
+    if (input.queryBy === "suratPemecatan") {
+      const surats = await ctx.db.suratPemecatan.findMany({
+        select: {
+          surat: {
+            select,
+          },
+        },
+      });
+      return surats.map(({ surat, ...data }) => ({ ...surat, ...data }));
+    }
+
+    if (input.queryBy === "suratSk") {
+      const surats = await ctx.db.suratSK.findMany({
+        select: {
+          surat: {
+            select,
+          },
+        },
+      });
+      return surats.map(({ surat, ...data }) => ({ ...surat, ...data }));
+    }
+
+    if (input.queryBy === "suratSp") {
+      const surats = await ctx.db.suratSP.findMany({
+        select: {
+          surat: {
+            select,
+          },
+        },
+      });
+      return surats.map(({ surat, ...data }) => ({ ...surat, ...data }));
+    }
+
+    if (input.queryBy === "suratTeguran") {
+      const surats = await ctx.db.suratSP.findMany({
+        select: {
+          surat: {
+            select,
+          },
+        },
+      });
+      return surats.map(({ surat, ...data }) => ({ ...surat, ...data }));
+    }
+
+    const surats = await ctx.db.surat.findMany({
+      select,
+    });
     return surats;
   }),
 
